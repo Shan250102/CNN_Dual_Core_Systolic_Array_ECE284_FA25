@@ -1,0 +1,47 @@
+[*]
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Sat Nov 29 08:31:31 2025
+[*]
+[dumpfile] "/home/linux/ieng6/ECE284_FA25_A00/n7kumar/systolic_array/core_tb.vcd"
+[dumpfile_mtime] "Sat Nov 29 08:13:14 2025"
+[dumpfile_size] 2578991
+[savefile] "/home/linux/ieng6/ECE284_FA25_A00/n7kumar/systolic_array/kernel_load.gtkw"
+[timestart] 63270
+[size] 1280 561
+[pos] -51 -1
+*-12.000000 70520 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] core_tb.
+[treeopen] core_tb.dut.
+[treeopen] core_tb.dut.CORELET_inst.
+[treeopen] core_tb.dut.CORELET_inst.L0_inst.row_num[7].
+[treeopen] core_tb.dut.CORELET_inst.mac_array_inst.
+[treeopen] core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].
+[treeopen] core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.
+[treeopen] core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[1].
+[treeopen] core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[1].mac_tile_instance.
+[treeopen] core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[7].
+[treeopen] core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[7].mac_tile_instance.
+[treeopen] core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[8].
+[treeopen] core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[8].mac_tile_instance.
+[sst_width] 271
+[signals_width] 221
+[sst_expanded] 1
+[sst_vpaned_height] 281
+@28
+core_tb.clk
+core_tb.execute
+core_tb.load
+core_tb.dut.CORELET_inst.mac_array_inst.inst_w[1:0]
+@22
+core_tb.dut.CORELET_inst.mac_array_inst.in_w[31:0]
+core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.in_w[3:0]
+@28
+core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[1].mac_tile_instance.load_ready_q
+@29
+core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[1].mac_tile_instance.inst_w[1:0]
+@22
+core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[1].mac_tile_instance.b_q[3:0]
+core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[8].mac_tile_instance.b_q[3:0]
+core_tb.dut.CORELET_inst.mac_array_inst.row_num[1].mac_row_instance.col_num[7].mac_tile_instance.b_q[3:0]
+[pattern_trace] 1
+[pattern_trace] 0
