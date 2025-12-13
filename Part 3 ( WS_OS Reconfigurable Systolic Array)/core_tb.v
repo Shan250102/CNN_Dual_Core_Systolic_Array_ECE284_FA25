@@ -116,7 +116,7 @@ core #(.bw(bw), .col(col), .row(row)) core_instance (
 
 initial begin
 
-    // Initializations
+    
     inst_w = 0;
     D_xmem = 0;
     CEN_pmem = 1;
@@ -147,12 +147,12 @@ initial begin
     // Activation data reading and writing to XMEM
     // --------------------------------------------------
     x_file = $fopen("Input_files/activation_padded_new_1.txt", "r");
-    // Skip headers (ensure this matches the actual number of header lines)
+  
     x_scan_file = $fscanf(x_file,"%s", captured_data);
     x_scan_file = $fscanf(x_file,"%s", captured_data);
     x_scan_file = $fscanf(x_file,"%s", captured_data);
 
-    // Reset Sequence
+   
     #0.5 clk = 1'b0; reset = 1;
     #0.5 clk = 1'b1;
 
@@ -177,13 +177,11 @@ initial begin
     #0.5 clk = 1'b1;
 
     $fclose(x_file);
-    // --------------------------------------------------
 
 
     for (kij=0; kij<9; kij=kij+1) begin // kij loop
 
-        // File name selection remains the same
-
+   
         case(kij)
         0: w_file_name = "weight_kij_new_0.txt";
         1: w_file_name = "weight_kij_new_1.txt";
@@ -229,7 +227,7 @@ initial begin
             WEN_xmem = 0; CEN_xmem = 0;
             if (t>0) A_xmem = A_xmem + 1;
 
-            // save lower bw bits to pack into IFIFO later
+         
             weights_arr[t] = temp_word[bw-1:0];
             #0.5 clk = 1'b1;
         end
@@ -256,34 +254,7 @@ initial begin
         #5.0 clk = ~clk;
 
 
-        // --------------------------------------------------
-        // L0 Load Phase (Kernel to L0)
-        // --------------------------------------------------
-       //hsabapat to fix L0 x prop  A_xmem = 11'b10000000000; // Kernel starting address
-
-       //hsabapat to fix L0 x prop  #0.5 clk = 1'b0; WEN_xmem = 1; CEN_xmem = 0;
-       //hsabapat to fix L0 x prop  #0.5 clk = 1'b1;
-
-       //hsabapat to fix L0 x prop  // Write the 8 kernel vectors from XMEM to L0 FIFO
-       //hsabapat to fix L0 x prop  for (j=0 ; j<col ; j++) begin
-       //hsabapat to fix L0 x prop      #0.5 clk = 1'b0; l0_wr = 1'b1; A_xmem = A_xmem + 1; // Increment address
-       //hsabapat to fix L0 x prop      #0.5 clk = 1'b1;
-       //hsabapat to fix L0 x prop  end
-       //hsabapat to fix L0 x prop  #0.5 clk = 1'b0; WEN_xmem = 1; CEN_xmem = 1; A_xmem = 0; l0_wr = 0;
-       //hsabapat to fix L0 x prop  #0.5 clk = 1'b1;
-       //hsabapat to fix L0 x prop  #10.0 clk = ~clk; // Wait for L0 FIFO to fill up properly
-
-        // --------------------------------------------------
-        // PE Load Phase (L0 -> PEs)
-        // --------------------------------------------------
-        // Load the 8 kernel vectors from L0 into the 8 PEs (1 cycle per PE)
-    //hsabapat to fix L0 x prop    for( l=0; l<col ; l++) begin
-    //hsabapat to fix L0 x prop        #0.5 clk = 1'b0; l0_rd = 1'b1; load = 1'b1;
-    //hsabapat to fix L0 x prop        #0.5 clk = 1'b1;
-    //hsabapat to fix L0 x prop    end
-    //hsabapat to fix L0 x prop    #0.5 clk = 1'b0; load = 0; l0_rd = 0;
-    //hsabapat to fix L0 x prop    #0.5 clk = 1'b1;
-    //hsabapat to fix L0 x prop    #10.0 clk = ~clk; // Wait for PE registers to settle
+        
 
     $display("kij=%0d asserting ififo_rd+load to latch weights into PEs",kij);
     #0.5 clk = 1'b0;
@@ -298,7 +269,7 @@ initial begin
         // --------------------------------------------------
         // Activation Stream & Execution Phase
         // --------------------------------------------------
-        A_xmem = 11'b00000000000; // Activation starting address
+        A_xmem = 11'b00000000000; 
 
         
                 #0.5 clk = 1'b0 ; WEN_xmem = 1; CEN_xmem = 0;
@@ -316,7 +287,7 @@ initial begin
 
                 #1.0 clk = ~clk;
 
-                // Stream len_nij (8) activation vectors from L0 into PEs
+              
                 for( l=0; l<len_nij ; l++) begin 
                     #0.5 clk = 1'b0; l0_rd = 1'b1; execute = 1'b1;
                     #0.5 clk = 1'b1;
@@ -358,7 +329,7 @@ initial begin
     out_file = $fopen("Input_files/output_new.txt", "r");
     acc_file = $fopen("acc.txt","r");
 
-    // Skip output file headers
+   
     out_scan_file = $fscanf(out_file,"%s", captured_data);
     out_scan_file = $fscanf(out_file,"%s", captured_data);
     out_scan_file = $fscanf(out_file,"%s", captured_data);
@@ -367,40 +338,37 @@ initial begin
 
     $display("############ Verification Start #############");
 
-    // Loop for all accumulated output vectors (len_onij = 8)
     for (i=0; i<len_onij; i=i+1) begin
 
-        // Read expected accumulated result from output_new.txt
         out_scan_file = $fscanf(out_file,"%256b", answer);
 
-        // Reset sequence (for accumulator reset/pipeline flush)
+      
         #0.5 clk = 1'b0; reset = 1;
         #0.5 clk = 1'b1;
         #0.5 clk = 1'b0; reset = 0;
         #0.5 clk = 1'b1;
 
-        // Accumulation sequence: Read 9 partial sums from PMEM and perform accumulation
+  
         for (j=0; j<len_kij; j=j+1) begin
 
             #0.5 clk = 1'b0;
-            // Read next partial sum address from acc.txt
+          
             acc_scan_file = $fscanf(acc_file,"%11b", A_pmem);
             CEN_pmem = 0; WEN_pmem = 1;
 
-            if (j>0) acc = 1; // Assert acc signal after the first partial sum read
+            if (j>0) acc = 1; 
             #0.5 clk = 1'b1;
         end
 
-        // Clock cycle (9): Deassert controls
+      
         #0.5 clk = 1'b0; acc = 0; CEN_pmem = 1;
         #0.5 clk = 1'b1;
 
-        // Clock cycle (10): Wait one full cycle for the final accumulated result (after ReLU) to stabilize on sfp_out
-        // This is where your core MUST drive sfp_out with the final value.
+     
         #0.5 clk = 1'b0;
         #0.5 clk = 1'b1;
 
-        // Read expected accumulated result from output_new.txt
+      
         out_scan_file = $fscanf(out_file,"%256b", answer);
 
         if (sfp_out == answer)
@@ -424,8 +392,7 @@ initial begin
 
     $fclose(acc_file);
     $fclose(out_file);
-    // --------------------------------------------------
-
+  
     for (t=0; t<10; t=t+1) begin
         #1.0 clk = ~clk;
     end
@@ -461,4 +428,5 @@ end
 
 
 endmodule
+
 
