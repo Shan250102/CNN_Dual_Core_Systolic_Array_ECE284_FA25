@@ -163,8 +163,8 @@ initial begin
     #0.5 clk = 1'b0; reset = 0;
     #0.5 clk = 1'b1;
 
-    // Write all Activation data (len_nij = 8 vectors) to XMEM
-    A_xmem = 0; // Start at address 0
+    
+    A_xmem = 0; 
     for (t=0; t<len_nij; t=t+1) begin
         #0.5 clk = 1'b0;
         x_scan_file = $fscanf(x_file,"%32b", D_xmem); 
@@ -435,7 +435,7 @@ initial begin
 end
 
 always @ (posedge clk) begin
-    // Your sequential logic remains the same
+    
     inst_w_q    <= inst_w;
     D_xmem_q    <= D_xmem;
     CEN_xmem_q <= CEN_xmem;
@@ -461,3 +461,4 @@ end
 
 
 endmodule
+
